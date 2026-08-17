@@ -1,5 +1,5 @@
 /*
- *  drivers/cpufreq/cpufreq_mikubeam.c
+ *  drivers/cpufreq/cpufreq_moonbeam.c
  *
  *  Copyright (C)  2001 Russell King
  *            (C)  2003 Venkatesh Pallipadi <venkatesh.pallipadi@intel.com>.
@@ -18,7 +18,7 @@
 #include <linux/tick.h>
 #include <linux/sched/cpufreq.h>
 
-#include "cpufreq_mikubeam.h"
+#include "cpufreq_moonbeam.h"
 
 /* On-demand governor macros */
 #define DEF_FREQUENCY_UP_THRESHOLD		(50)
@@ -401,7 +401,7 @@ static struct od_ops od_ops = {
 };
 
 static struct dbs_governor od_dbs_gov = {
-	.gov = CPUFREQ_DBS_GOVERNOR_INITIALIZER("mikubeam"),
+	.gov = CPUFREQ_DBS_GOVERNOR_INITIALIZER("moonbeam"),
 	.kobj_type = { .default_attrs = od_attributes },
 	.gov_dbs_update = od_dbs_update,
 	.alloc = od_alloc,
@@ -411,7 +411,7 @@ static struct dbs_governor od_dbs_gov = {
 	.start = od_start,
 };
 
-#define CPU_FREQ_GOV_MIKUBEAM	(&od_dbs_gov.gov)
+#define CPU_FREQ_GOV_MOONBEAM	(&od_dbs_gov.gov)
 
 static void od_set_powersave_bias(unsigned int powersave_bias)
 {
@@ -432,7 +432,7 @@ static void od_set_powersave_bias(unsigned int powersave_bias)
 			continue;
 
 		policy = cpufreq_cpu_get_raw(cpu);
-		if (!policy || policy->governor != CPU_FREQ_GOV_MIKUBEAM)
+		if (!policy || policy->governor != CPU_FREQ_GOV_MOONBEAM)
 			continue;
 
 		policy_dbs = policy->governor_data;
@@ -466,18 +466,18 @@ EXPORT_SYMBOL_GPL(od_unregister_powersave_bias_handler);
 
 static int __init cpufreq_gov_dbs_init(void)
 {
-	return cpufreq_register_governor(CPU_FREQ_GOV_MIKUBEAM);
+	return cpufreq_register_governor(CPU_FREQ_GOV_MOONBEAM);
 }
 
 static void __exit cpufreq_gov_dbs_exit(void)
 {
-	cpufreq_unregister_governor(CPU_FREQ_GOV_MIKUBEAM);
+	cpufreq_unregister_governor(CPU_FREQ_GOV_MOONBEAM);
 }
 
-#ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_MIKUBEAM
+#ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_MOONBEAM
 struct cpufreq_governor *cpufreq_default_governor(void)
 {
-	return CPU_FREQ_GOV_MIKUBEAM;
+	return CPU_FREQ_GOV_MOONBEAM;
 }
 
 fs_initcall(cpufreq_gov_dbs_init);
